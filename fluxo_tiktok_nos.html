@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d16">
+<title>Fluxo TikTok — Central de Conteúdo</title>
+<style>
+:root{--bg:#080d16;--panel:#101a29;--panel2:#0c1420;--line:#2a3b52;--text:#eef5ff;--muted:#9bacbf;--green:#40e493;--pink:#ff4c8b;--purple:#bd7bff;--blue:#48baff;--yellow:#ffd45b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172945 0,#080d16 52%);color:var(--text);font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:16px}
+main{max-width:1150px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:6px 0 18px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--blue);font-weight:800;text-transform:uppercase}h1{font-size:clamp(27px,4vw,39px);letter-spacing:-1.2px;line-height:1.1;margin:5px 0}.sub{color:var(--muted);max-width:650px}.pill{border:1px solid #5a4c27;background:#241f13;color:var(--yellow);padding:9px 13px;border-radius:999px;font-size:12px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:15px 0}.stat{background:#101a29;border:1px solid var(--line);border-radius:14px;padding:13px}.stat b{font-size:24px;display:block}.stat span{font-size:12px;color:var(--muted)}
+.panel{background:#0d1725ed;border:1px solid var(--line);border-radius:18px;padding:17px;margin:14px 0;box-shadow:0 15px 35px #0002}.panelhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}h2{font-size:18px;margin:0 0 12px}.small{font-size:12px;color:var(--muted)}
+.progress{height:9px;background:#26364a;border-radius:20px;overflow:hidden;margin:12px 0 6px}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .2s}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch;margin-top:18px}.node{position:relative;border:1px solid var(--line);border-top:4px solid var(--nodecolor);border-radius:15px;background:linear-gradient(155deg,#142033,#0b131f);padding:14px;display:flex;flex-direction:column;gap:9px;min-width:0;transition:.2s}.node:not(:last-child):after{content:"➜";position:absolute;right:-17px;top:50%;z-index:2;color:#71849c;font-size:17px}.node.done{box-shadow:0 0 0 1px #40e49344;border-color:#2b7855}.node.locked{opacity:.55}.nodehead{display:flex;justify-content:space-between;align-items:center;gap:5px}.emoji{font-size:25px}.status{font-size:10px;font-weight:800;letter-spacing:.4px;border-radius:99px;background:#202d40;color:#bdcadb;padding:5px 7px}.done .status{background:#123a29;color:var(--green)}.node h3{font-size:16px;margin:0}.acct{font-size:11px;color:var(--nodecolor);font-weight:800;text-transform:uppercase;letter-spacing:.5px}.node p{font-size:12px;color:#b5c3d4;margin:0;flex:1}.mini-progress{height:5px;background:#29384c;border-radius:99px;overflow:hidden}.mini-progress div{height:100%;background:var(--nodecolor);width:0}.node button{margin-top:3px}
+button{font:inherit;border:1px solid #40536b;border-radius:10px;padding:10px 12px;background:#1b2a3e;color:var(--text);font-weight:750;cursor:pointer}button:hover:not(:disabled){filter:brightness(1.14)}button:disabled{opacity:.35;cursor:not-allowed}.primary{background:#eaf2ff;color:#101827;border-color:#eaf2ff}.node .nodebtn{width:100%;font-size:12px}.done .nodebtn{background:#123a29;color:var(--green);border-color:#2c7955}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tasklist{display:grid;gap:8px}.task{display:flex;gap:10px;align-items:flex-start;border:1px solid #26374c;border-radius:11px;padding:10px;background:#0b1420}.task input{accent-color:var(--green);width:17px;height:17px;margin-top:2px;flex-shrink:0}.task label{cursor:pointer;flex:1}.task strong{display:block;font-size:13px}.task small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.task.checked{border-color:#286947;background:#0d211b}.task.checked strong{text-decoration:line-through;color:#9db6a8}
+.note{background:#111e2e;border-left:3px solid var(--yellow);padding:11px 13px;border-radius:8px;color:#c5d2e2;font-size:12px;margin-top:12px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.actions button{flex:1}.empty{border:1px dashed #35475e;padding:25px;text-align:center;border-radius:13px;color:var(--muted)}.footer{text-align:center;color:#7e91a8;font-size:11px;padding:18px}
+@media(max-width:800px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.node:nth-child(2):after{display:none}.details{grid-template-columns:1fr}}
+@media(max-width:480px){body{padding:10px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr;gap:14px}.node:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-18px;transform:translateX(50%)}.node:nth-child(2):after{display:block}.panel{padding:13px}.stat b{font-size:21px}}
+</style>
+</head>
+<body>
+<main>
+ <header class="top">
+  <div><div class="eyebrow">Seu painel de produção</div><h1>⚡ Fluxo TikTok</h1><div class="sub">Conclua as tarefas de cada nó. O próximo nó é liberado quando você marca todas as etapas do atual.</div></div>
+  <div class="pill">META DIÁRIA · 4 VÍDEOS</div>
+ </header>
+ <section class="stats">
+  <div class="stat"><b id="videoCount">0/4</b><span>vídeos concluídos</span></div>
+  <div class="stat"><b id="taskCount">0/16</b><span>etapas marcadas</span></div>
+  <div class="stat"><b id="percent">0%</b><span>progresso do fluxo</span></div>
+  <div class="stat"><b id="nextNode">Shop #1</b><span>próximo nó</span></div>
+ </section>
+ <section class="panel">
+  <div class="panelhead"><h2>🧩 Fluxo de nós</h2><span class="small" id="dateLabel"></span></div>
+  <div class="progress"><div id="mainbar"></div></div><div class="small" id="progressText">Comece pelo Nó 1.</div>
+  <div class="flow" id="flow"></div>
+  <div class="note">Regra do fluxo: marque as etapas internas como concluídas para liberar o próximo nó. Você pode reabrir uma etapa, mas os nós seguintes serão bloqueados novamente se o nó anterior ficar incompleto.</div>
+ </section>
+ <section class="panel">
+  <div class="panelhead"><h2 id="detailTitle">📋 Etapas do nó selecionado</h2><span class="small" id="detailStatus">Selecione um nó para ver as tarefas.</span></div>
+  <div id="detailContent" class="empty">Clique em “Abrir tarefas” no primeiro nó para começar.</div>
+  <div class="actions"><button onclick="resetDay()">↻ Reiniciar o dia</button><button class="primary" onclick="copySummary()">Copiar resumo do dia</button></div>
+ </section>
+ <div class="footer">PLANEJE • PRODUZA • PUBLIQUE • ANALISE · Seus dados ficam neste navegador.</div>
+</main>
+<script>
+const FLOW=[
+ {id:'shop1',name:'TikTok Shop · Vídeo 1',short:'Shop #1',emoji:'🛍️',account:'TikTok Shop · Brasil',color:'#ff4c8b',desc:'Primeiro vídeo de produto do dia.',tasks:[['Escolher o produto','Definir o produto que será divulgado.'],['Preparar o gancho','Criar uma abertura clara e interessante.'],['Gerar ou gravar o vídeo','Preparar o material visual do produto.'],['Editar e revisar','Conferir imagem, áudio, legenda e chamada.'],['Publicar e conferir','Publicar e confirmar que o vídeo está no ar.']]},
+ {id:'shop2',name:'TikTok Shop · Vídeo 2',short:'Shop #2',emoji:'🛒',account:'TikTok Shop · Brasil',color:'#ff4c8b',desc:'Segundo vídeo, tentando variar o ângulo ou o gancho.',tasks:[['Escolher produto/ângulo','Pode ser outro produto ou uma abordagem diferente.'],['Criar gancho e demonstração','Mostrar rapidamente o benefício principal.'],['Gerar ou gravar o vídeo','Preparar os takes necessários.'],['Editar e revisar','Conferir qualidade e chamada para ação.'],['Publicar e conferir','Publicar e confirmar que o vídeo está no ar.']]},
+ {id:'approach',name:'Vídeo de abordagem',short:'Abordagem',emoji:'🎬',account:'Monetização · Brasil',color:'#bd7bff',desc:'Conteúdo de abordagem para a conta brasileira monetizada.',tasks:[['Escolher história/situação','Separar o caso ou a ideia do vídeo.'],['Escrever uma abertura forte','Prender a atenção nos primeiros segundos.'],['Editar o vídeo','Organizar ritmo, cortes, legendas e áudio.'],['Publicar e conferir','Revisar antes de publicar e confirmar a postagem.']]},
+ {id:'cats',name:'Vídeo de gatos',short:'Gatos DE',emoji:'🐈',account:'Monetização · Alemanha',color:'#40e493',desc:'Conteúdo sobre gatos com texto ou narração em alemão.',tasks:[['Escolher curiosidade ou história','Focar em comportamento, fatos ou curiosidades de gatos.'],['Preparar texto em alemão','Revisar se a legenda/narração está natural.'],['Editar e revisar','Conferir ritmo, clareza, legenda e material utilizado.'],['Publicar e conferir','Publicar e confirmar que o vídeo está no ar.']]}
+];
+const KEY='fluxo_tiktok_v2';
+let selected='shop1';
+function blankState(){return {checks:{},extras:{}}}
+function state(){try{return JSON.parse(localStorage.getItem(KEY))||blankState()}catch(e){return blankState()}}
+function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+function doneCount(f,s){return f.tasks.filter((_,i)=>s.checks[f.id+'_'+i]).length}
+function isDone(f,s){return doneCount(f,s)===f.tasks.length}
+function isUnlocked(idx,s){return idx===0||isDone(FLOW[idx-1],s)}
+function render(){
+ const s=state(),flow=document.getElementById('flow');flow.innerHTML='';
+ let completedVideos=0,totalTasks=0,completedTasks=0;
+ FLOW.forEach((f,idx)=>{
+  const d=doneCount(f,s),finished=d===f.tasks.length,unlocked=isUnlocked(idx,s);
+  totalTasks+=f.tasks.length;completedTasks+=d;if(finished)completedVideos++;
+  const el=document.createElement('article');el.className='node'+(finished?' done':'')+(!unlocked?' locked':'');el.style.setProperty('--nodecolor',f.color);
+  el.innerHTML=`<div class="nodehead"><span class="emoji">${f.emoji}</span><span class="status">${finished?'✓ CONCLUÍDO':unlocked?'● DISPONÍVEL':'🔒 BLOQUEADO'}</span></div><div class="acct">${f.account}</div><h3>${f.name}</h3><p>${f.desc}</p><div class="mini-progress"><div style="width:${d/f.tasks.length*100}%"></div></div><div class="small">${d}/${f.tasks.length} etapas concluídas</div><button class="nodebtn" ${!unlocked?'disabled':''} onclick="openNode('${f.id}')">${finished?'Revisar tarefas':'Abrir tarefas'}</button>`;
+  el.addEventListener('click',e=>{if(e.target.tagName!=='BUTTON'&&unlocked)openNode(f.id)});flow.appendChild(el);
+ });
+ const pct=Math.round(completedTasks/totalTasks*100),next=FLOW.find((f,i)=>!isDone(f,s)&&isUnlocked(i,s));
+ document.getElementById('videoCount').textContent=completedVideos+'/4';document.getElementById('taskCount').textContent=completedTasks+'/'+totalTasks;document.getElementById('percent').textContent=pct+'%';document.getElementById('nextNode').textContent=next?next.short:'Finalizado 🎉';document.getElementById('mainbar').style.width=pct+'%';
+ document.getElementById('progressText').textContent=completedVideos===4?'Meta diária concluída! Faça a revisão final e anote ideias para amanhã.':`Você concluiu ${completedTasks} de ${totalTasks} etapas. ${next?'Próximo nó: '+next.short+'.':'Todos os nós concluídos.'}`;
+ document.getElementById('dateLabel').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+ renderDetail();
+}
+function openNode(id){selected=id;renderDetail();document.getElementById('detailTitle').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function renderDetail(){
+ const s=state(),f=FLOW.find(x=>x.id===selected),idx=FLOW.findIndex(x=>x.id===selected),unlocked=isUnlocked(idx,s);
+ document.getElementById('detailTitle').textContent=f.emoji+' '+f.name+' — tarefas internas';
+ document.getElementById('detailStatus').textContent=doneCount(f,s)+' de '+f.tasks.length+' concluídas';
+ const host=document.getElementById('detailContent');
+ if(!unlocked){host.className='empty';host.textContent='Este nó está bloqueado. Conclua todas as etapas do nó anterior para liberá-lo.';return}
+ host.className='tasklist';
+ host.innerHTML=f.tasks.map((t,i)=>{const key=f.id+'_'+i,checked=!!s.checks[key];return `<div class="task ${checked?'checked':''}"><input type="checkbox" id="${key}" ${checked?'checked':''} onchange="toggleTask('${key}',this.checked)"><label for="${key}"><strong>${i+1}. ${t[0]}</strong><small>${t[1]}</small></label></div>`}).join('');
+}
+function toggleTask(key,value){const s=state();s.checks[key]=value;const parts=key.split('_'),id=parts[0],idx=FLOW.findIndex(f=>f.id===id);if(!value){for(let j=idx+1;j<FLOW.length;j++){FLOW[j].tasks.forEach((_,i)=>delete s.checks[FLOW[j].id+'_'+i])}}save(s);render()}
+function resetDay(){if(confirm('Tem certeza que quer limpar todas as tarefas marcadas de hoje?')){localStorage.removeItem(KEY);selected='shop1';render()}}
+function copySummary(){const s=state();let lines=['FLUXO TIKTOK — RESUMO DO DIA'];FLOW.forEach(f=>{lines.push('',f.name+' ('+doneCount(f,s)+'/'+f.tasks.length+')');f.tasks.forEach((t,i)=>lines.push((s.checks[f.id+'_'+i]?'[OK] ':'[ ] ')+t[0]))});const txt=lines.join('\n');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>alert('Resumo copiado!')).catch(()=>prompt('Copie o resumo:',txt));else prompt('Copie o resumo:',txt)}
+render();
+</script>
+</body>
+</html>
